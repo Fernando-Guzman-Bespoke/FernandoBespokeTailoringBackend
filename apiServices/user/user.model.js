@@ -33,12 +33,6 @@ const createUser = async ({
         if (err instanceof CustomError) throw err;
         const { code, detail } = err;
         let error = 'Datos no válidos.';
-        // LLave repetida
-        if (code === '23505') {
-            if (detail?.includes('(cui)')) error = 'El cui ya se encuentra asignado a otro usuario.';
-            if (detail?.includes('(pasaporte)')) error = 'El pasaporte ya se encuentra asignado a otro usuario.';
-            if (detail?.includes('(email)')) error = 'El email ya se encuentra asignado a otro usuario.';
-        }
 
         throw new CustomError(error, 400);
     }

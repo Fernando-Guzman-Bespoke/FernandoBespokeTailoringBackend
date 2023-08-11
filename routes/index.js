@@ -7,6 +7,8 @@ import medicalCenterRouter from '../apiServices/medicalCenter/medicalCenter.rout
 import supplyRouter from '../apiServices/supply/supplyRouter.js';
 import testRouter from '../apiServices/test/test.router.js';
 import reportRouter from '../apiServices/report/report.router.js';
+import orderRouter from '../apiServices/order/order.route.js';
+
 
 const router = express.Router();
 
@@ -18,5 +20,6 @@ router.use('/medicalCenter', medicalCenterRouter);
 router.use('/supply', supplyRouter);
 router.use('/test', testRouter);
 router.use('/report', reportRouter);
+router.use('/order', orderRouter);
 
 export default router;
