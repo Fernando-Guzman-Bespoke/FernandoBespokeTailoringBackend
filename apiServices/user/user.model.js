@@ -136,17 +136,16 @@ const getUsersList = async () => {
     return parsedResult;
 };
 
-const getDoctors = async ({ search }) => {
-    let sql = `SELECT u.nombre AS name, u.apellido AS lastname, u.cui, u.pasaporte AS passport, 
-            me.especialidad AS specialty, sexo as sex FROM usuario u 
-            INNER JOIN medico me ON u.id_medico = me.id_medico `;
+const getClients = async ({ search }) => {
+    console.log('clients')
+    let sql = `SELECT id_cliente, nombre, genero FROM public.cliente`;
     let result;
     if (search) {
         sql
-      += ' WHERE u.nombre ILIKE $1 OR u.apellido ILIKE $1 OR cui = $2 OR pasaporte = $2';
+      += ' WHERE id_cliente ILIKE $1';
         result = await query(sql, `%${search}%`, search);
     } else result = await query(sql);
-
+    console.log(result)
     return result;
 };
 
@@ -206,6 +205,6 @@ const updateUser = async (userId, name, lastName, cui, passport, email, sex, pas
 };
 
 export {
-    createUser, createDoctor, authenticate, createAdmin, getUsersList, getDoctors, getUserData,
+    createUser, createDoctor, authenticate, createAdmin, getUsersList, getClients, getUserData,
     updateUser,
 };

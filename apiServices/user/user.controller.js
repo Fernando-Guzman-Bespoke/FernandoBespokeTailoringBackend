@@ -1,44 +1,10 @@
 import sha256 from 'js-sha256';
 import CustomError from '../../helpers/customError.js';
 import {
-    authenticate, createAdmin, createDoctor, createUser, getUsersList, getDoctors,
+    authenticate, createAdmin, createUser, getUsersList, getClients,
     getUserData, updateUser,
 } from './user.model.js';
 import { signToken } from '../../services/jwt.js';
-
-const createDoctorController = async (req, res) => {
-    const {
-        cui, passport, name, lastName, email, sex, password, speciality, medicalCenterId,
-    } = req.body;
-
-    try {
-        const doctorId = await createDoctor({
-            speciality,
-            medicalCenterId,
-        });
-
-        const passwordHash = sha256(password);
-        const userId = await createUser({
-            cui,
-            passport,
-            name,
-            lastName,
-            email,
-            sex,
-            passwordHash,
-            doctorId,
-        });
-
-        res.status(200).send({ id: userId });
-    } catch (ex) {
-        res.statusMessage = ex?.message ?? 'Ocurrió un error.';
-        if (ex instanceof CustomError) {
-            return res.status(ex.status).send({ err: ex.message, status: ex.status });
-        }
-        res.sendStatus(500);
-    }
-    return null;
-};
 
 const createAdminController = async (req, res) => {
     const {
@@ -104,11 +70,10 @@ const getUsersListController = async (req, res) => {
     }
 };
 
-const getDoctorsController = async (req, res) => {
+const getClientController = async (req, res) => {
     const { search } = req.query;
     try {
-        const { result, rowCount } = await getDoctors({ search });
-
+        const { result, rowCount } = await getClients({ search });
         if (rowCount === 0) return res.status(404).send({ err: 'No se encontraron resultados.', status: 404 });
         return res.send(result);
     } catch (ex) {
@@ -154,6 +119,6 @@ const updateUserController = async (req, res) => {
 };
 
 export {
-    createDoctorController, login, createAdminController, getUsersListController,
-    getDoctorsController, getUserDataController, updateUserController,
+     login, createAdminController, getUsersListController,
+     getClientController, getUserDataController, updateUserController,
 };

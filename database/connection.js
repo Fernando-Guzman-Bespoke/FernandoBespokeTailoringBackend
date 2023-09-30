@@ -5,7 +5,6 @@ import {
 
 const { Pool } = pgPkg;
 
-// Coloca aquí tus credenciales
 const pool = new Pool({
     user: dbUser,
     host: dbHost,

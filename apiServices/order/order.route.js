@@ -6,7 +6,6 @@ import validateBody from '../../middleware/validateBody.js';
 import {
     createPedidoController,
 } from './order.controller.js';
-import { ensureAdminAuth, ensureAuth, ensureDoctorAuth } from '../../middleware/ensureAuth.js';
 
 const router = express.Router();
 
